@@ -2,6 +2,8 @@
 
 # This file will be sourced in init.sh
 
+# This file is updated by Dima
+
 # https://raw.githubusercontent.com/ai-dock/comfyui/main/config/provisioning/default.sh
 
 # Packages are installed after nodes so we can fix them...
