@@ -251,9 +251,9 @@ function provisioning_dima_wget_list() {
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/ipadapters/" "https://huggingface.co/XLabs-AI/flux-ip-adapter/resolve/main/flux-ip-adapter.safetensors"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip/" "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors"
     mkdir -p "/workspace/ComfyUI/models/loras/"
-    curl -L -O -J -s -H "Authorization: Bearer 5d4959dad81a395f366e32ce895c003c" "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) /workspace/ComfyUI/models/loras/
-    curl -L -O -J -H "Authorization: Bearer 5d4959dad81a395f366e32ce895c003c" "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) /workspace/ComfyUI/models/loras/
-    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) /workspace/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) ${WORKSPACE}/ComfyUI/models/loras/
     
 }
 
