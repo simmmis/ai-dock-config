@@ -21,7 +21,25 @@ PIP_PACKAGES=(
 )
 
 NODES=(
-    
+    "https://github.com/XLabs-AI/x-flux-comfyui"
+    "https://github.com/crystian/ComfyUI-Crystools"
+    "https://github.com/crystian/ComfyUI-Crystools-save"
+    "https://github.com/zcfrank1st/Comfyui-Toolbox"
+    "https://github.com/palant/extended-saveimage-comfyui"
+    "https://github.com/kijai/ComfyUI-KJNodes"
+    "https://github.com/Fannovel16/comfyui_controlnet_aux"
+    "https://github.com/jags111/efficiency-nodes-comfyui"
+    "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
+    "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes"
+    "https://github.com/cubiq/ComfyUI_InstantID"
+    "https://github.com/twri/sdxl_prompt_styler"
+    "https://github.com/bash-j/mikey_nodes"
+    "https://github.com/mpiquero7164/ComfyUI-SaveImgPrompt"
+    "https://github.com/cubiq/ComfyUI_essentials"
+    "https://github.com/palant/extended-saveimage-comfyui"
+    "https://github.com/wmatson/easy-comfy-nodes"
+    "https://github.com/KoreTeknology/ComfyUI-Universal-Styler"
+    "https://github.com/royceschultz/ComfyUI-Notifications"
 )
 
 CHECKPOINT_MODELS=(
@@ -40,6 +58,9 @@ VAE_MODELS=(
 )
 
 LORA_MODELS=(
+    "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor"
+    "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor"
+    "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor"
 )
 
 ESRGAN_MODELS=(
