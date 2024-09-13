@@ -11,6 +11,7 @@
 DEFAULT_WORKFLOW="https://raw.githubusercontent.com/ai-dock/comfyui/main/config/workflows/flux-comfyui-example.json"
 
 APT_PACKAGES=(
+    "mc"
     #"package-1"
     #"package-2"
 )
@@ -58,9 +59,6 @@ VAE_MODELS=(
 )
 
 LORA_MODELS=(
-    "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor"
 )
 
 ESRGAN_MODELS=(
@@ -117,6 +115,7 @@ function provisioning_start() {
     provisioning_get_models \
         "${WORKSPACE}/storage/stable_diffusion/models/esrgan" \
         "${ESRGAN_MODELS[@]}"
+    provisioning_dima_wget_list
     provisioning_print_end
 }
 
@@ -244,5 +243,17 @@ function provisioning_download() {
         wget -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
     fi
 }
+
+# Downloading files what i need
+function provisioning_dima_wget_list() {
+    printf "Starting to Download Dima_wget_List"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip_vision/" "https://huggingface.co/openai/clip-vit-large-patch14/resolve/main/model.safetensors"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/ipadapters/" "https://huggingface.co/XLabs-AI/flux-ip-adapter/resolve/main/flux-ip-adapter.safetensors"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip/" "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors"
+    wget --header="Authorization: Bearer $CIVITAI_TOKEN" -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/loras/" "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor"
+    wget --header="Authorization: Bearer $CIVITAI_TOKEN" -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/loras/" "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor"
+    wget --header="Authorization: Bearer $CIVITAI_TOKEN" -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/loras/" "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor"
+}
+
 
 provisioning_start
