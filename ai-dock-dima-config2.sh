@@ -90,6 +90,7 @@ function provisioning_start() {
     fi
 
     provisioning_print_header
+    provisioning_dima_wget_list
     provisioning_get_apt_packages
     provisioning_get_default_workflow
     provisioning_get_nodes
@@ -115,7 +116,6 @@ function provisioning_start() {
     provisioning_get_models \
         "${WORKSPACE}/storage/stable_diffusion/models/esrgan" \
         "${ESRGAN_MODELS[@]}"
-    provisioning_dima_wget_list
     provisioning_print_end
 }
 
