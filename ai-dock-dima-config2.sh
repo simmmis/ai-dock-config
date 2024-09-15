@@ -247,13 +247,30 @@ function provisioning_download() {
 # Downloading files what i need
 function provisioning_dima_wget_list() {
     printf "Starting to Download Dima_wget_List"
+    mkdir -p "/workspace/ComfyUI/models/xlabs/controlnets"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip_vision/" "https://huggingface.co/openai/clip-vit-large-patch14/resolve/main/model.safetensors"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/ipadapters/" "https://huggingface.co/XLabs-AI/flux-ip-adapter/resolve/main/flux-ip-adapter.safetensors"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip/" "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/controlnets" "https://huggingface.co/XLabs-AI/flux-controlnet-collections/resolve/main/flux-depth-controlnet-v3.safetensors"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/controlnets" "https://huggingface.co/XLabs-AI/flux-controlnet-collections/resolve/main/flux-canny-controlnet-v3.safetensors"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/controlnets" "https://huggingface.co/XLabs-AI/flux-controlnet-collections/resolve/main/flux-hed-controlnet-v3.safetensors"
+    
+    
     mkdir -p "/workspace/ComfyUI/models/loras/"
-    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) ${WORKSPACE}/ComfyUI/models/loras/
-    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) ${WORKSPACE}/ComfyUI/models/loras/
-    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor" && mv $(ls -t | head -n1) ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/720252?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    #curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/464939?type=Model&format=SafeTensor&size=full&fp=fp16" && mv $(ls -t | head -n1) ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/417733?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/732180?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/804837?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/780989?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/758624?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+    
+    
+    
+    
+    
     
 }
 
