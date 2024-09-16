@@ -12,6 +12,7 @@ DEFAULT_WORKFLOW="https://raw.githubusercontent.com/ai-dock/comfyui/main/config/
 
 APT_PACKAGES=(
     "mc"
+    "ncdu"
     #"package-1"
     #"package-2"
 )
@@ -23,6 +24,10 @@ PIP_PACKAGES=(
 
 NODES=(
     "https://github.com/XLabs-AI/x-flux-comfyui"
+    "https://github.com/huxiuhan/ComfyUI-InstantID"
+    "https://github.com/cubiq/ComfyUI_IPAdapter_plus"
+    "https://github.com/WASasquatch/was-node-suite-comfyui"
+    "https://github.com/EeroHeikkinen/ComfyUI-eesahesNodes"
     "https://github.com/crystian/ComfyUI-Crystools"
     "https://github.com/crystian/ComfyUI-Crystools-save"
     "https://github.com/zcfrank1st/Comfyui-Toolbox"
@@ -247,15 +252,30 @@ function provisioning_download() {
 # Downloading files what i need
 function provisioning_dima_wget_list() {
     printf "Starting to Download Dima_wget_List"
-    mkdir -p "/workspace/ComfyUI/models/xlabs/controlnets"
+    
+    #CLIP vision
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip_vision/" "https://huggingface.co/openai/clip-vit-large-patch14/resolve/main/model.safetensors"
+    #Xlabs-AI flux-ip-adapter
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/ipadapters/" "https://huggingface.co/XLabs-AI/flux-ip-adapter/resolve/main/flux-ip-adapter.safetensors"
+
+    # Clip (google's) Text Encoder (выше есть уже качается но удалять отсюда не буду пока)
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip/" "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors"
+
+    # FLUX1 controlnets
+    mkdir -p "/workspace/ComfyUI/models/xlabs/controlnets"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/controlnets" "https://huggingface.co/XLabs-AI/flux-controlnet-collections/resolve/main/flux-depth-controlnet-v3.safetensors"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/controlnets" "https://huggingface.co/XLabs-AI/flux-controlnet-collections/resolve/main/flux-canny-controlnet-v3.safetensors"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/xlabs/controlnets" "https://huggingface.co/XLabs-AI/flux-controlnet-collections/resolve/main/flux-hed-controlnet-v3.safetensors"
     
-    
+    #instantX controlnet
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/controlnet/" "https://huggingface.co/InstantX/FLUX.1-dev-Controlnet-Union/resolve/832dab0074e8541d4c324619e0e357befba19611/diffusion_pytorch_model.safetensors"
+    mkdir -p "/workspace/ComfyUI/models/controlnet/Union-Pro/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/controlnet/Union-Pro/" "https://huggingface.co/Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro/resolve/main/diffusion_pytorch_model.safetensors"
+    # переношу в ту же папку, потому что нода не увидела.
+    mv "/workspace/ComfyUI/models/controlnet/Union-Pro/diffusion_pytorch_model.safetensors" "/workspace/ComfyUI/models/controlnet/diffusion_pytorch_model_PRO.safetensors"
+
+
+    #FLUX1 LORAS
     mkdir -p "/workspace/ComfyUI/models/loras/"
     curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/745845?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
     curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/738658?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
@@ -266,13 +286,51 @@ function provisioning_dima_wget_list() {
     curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/804837?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
     curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/780989?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
     curl -L -O -J -H "Authorization: Bearer $CIVITAI_TOKEN" "https://civitai.com/api/download/models/758624?type=Model&format=SafeTensor" && mv "$(ls -t | head -n1)" ${WORKSPACE}/ComfyUI/models/loras/
+
+    # Докачиваем FLUX1.dev_fp8    
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/unet/" "https://huggingface.co/XLabs-AI/flux-dev-fp8/resolve/main/flux-dev-fp8.safetensors"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/unet/" "https://huggingface.co/XLabs-AI/flux-dev-fp8/resolve/main/flux_dev_quantization_map.json"
+    # Вот тут еще лежат флюксы квантизованные https://huggingface.co/Kijai/flux-fp8/tree/main но я не тестил
     
-    
-    
-    
-    
-    
+    #Для InstantID файлы
+    mkdir -p "/workspace/ComfyUI/models/checkpoints/sdxl/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/checkpoints/sdxl/" "https://huggingface.co/frankjoshua/albedobaseXL_v13/resolve/main/albedobaseXL_v13.safetensors"
+
+    mkdir -p "/workspace/ComfyUI/models/instantid/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/instantid/" "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin"
+
+    mkdir -p "/workspace/ComfyUI/models/controlnet/instantid/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/controlnet/instantid/" "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors"
+
+
+    #Antelopev2!!!!
+    mkdir -p "/workspace/ComfyUI/models/insightface/models/antelopev2/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/insightface/models/antelopev2/" "https://huggingface.co/DIAMONIK7777/antelopev2/resolve/main/1k3d68.onnx"
+
+    mkdir -p "/workspace/ComfyUI/models/insightface/models/antelopev2/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/insightface/models/antelopev2/" "https://huggingface.co/DIAMONIK7777/antelopev2/resolve/main/2d106det.onnx"
+
+    mkdir -p "/workspace/ComfyUI/models/insightface/models/antelopev2/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/insightface/models/antelopev2/" "https://huggingface.co/DIAMONIK7777/antelopev2/resolve/main/genderage.onnx"
+
+    mkdir -p "/workspace/ComfyUI/models/insightface/models/antelopev2/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/insightface/models/antelopev2/" "https://huggingface.co/DIAMONIK7777/antelopev2/resolve/main/glintr100.onnx"
+
+    mkdir -p "/workspace/ComfyUI/models/insightface/models/antelopev2/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/insightface/models/antelopev2/" "https://huggingface.co/DIAMONIK7777/antelopev2/resolve/main/scrfd_10g_bnkps.onnx"
+
+
+    mkdir -p "/workspace/ComfyUI/models/ipadapter/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/ipadapter/" "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors"
+
+    mkdir -p "/workspace/ComfyUI/models/clip_vision/"
+    wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip_vision/" "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors"
 }
 
 
+
 provisioning_start
+
+
+
+
