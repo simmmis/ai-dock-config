@@ -301,6 +301,10 @@ function provisioning_dima_wget_list() {
     mkdir -p "/workspace/ComfyUI/models/controlnet/instantid/"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/controlnet/instantid/" "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors"
 
+    #CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors
+    mkdir -p "/workspace/ComfyUI/models/clip_vision/"
+    wget -qnc --show-progress -O "/workspace/ComfyUI/models/clip_vision/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors" "https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K/resolve/main/open_clip_pytorch_model.safetensors"
+
 
     #Antelopev2!!!!
     mkdir -p "/workspace/ComfyUI/models/insightface/models/antelopev2/"
@@ -324,8 +328,14 @@ function provisioning_dima_wget_list() {
 
     mkdir -p "/workspace/ComfyUI/models/clip_vision/"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip_vision/" "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors"
+    
 
-}
+
+
+
+###########
+
+}  
 
 
 
