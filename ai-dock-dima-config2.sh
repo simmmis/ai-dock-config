@@ -25,6 +25,7 @@ PIP_PACKAGES=(
 NODES=(
     "https://github.com/XLabs-AI/x-flux-comfyui"
     "https://github.com/huxiuhan/ComfyUI-InstantID"
+    "https://github.com/cubiq/ComfyUI_InstantID"
     "https://github.com/cubiq/ComfyUI_IPAdapter_plus"
     "https://github.com/WASasquatch/was-node-suite-comfyui"
     "https://github.com/EeroHeikkinen/ComfyUI-eesahesNodes"
@@ -37,10 +38,8 @@ NODES=(
     "https://github.com/jags111/efficiency-nodes-comfyui"
     "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
     "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes"
-    "https://github.com/cubiq/ComfyUI_InstantID"
     "https://github.com/twri/sdxl_prompt_styler"
     "https://github.com/bash-j/mikey_nodes"
-    "https://github.com/mpiquero7164/ComfyUI-SaveImgPrompt"
     "https://github.com/cubiq/ComfyUI_essentials"
     "https://github.com/palant/extended-saveimage-comfyui"
     "https://github.com/wmatson/easy-comfy-nodes"
@@ -325,6 +324,7 @@ function provisioning_dima_wget_list() {
 
     mkdir -p "/workspace/ComfyUI/models/clip_vision/"
     wget -qnc --content-disposition --show-progress -P "/workspace/ComfyUI/models/clip_vision/" "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors"
+
 }
 
 
